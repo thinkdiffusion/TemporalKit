@@ -4,6 +4,7 @@ import glob
 import requests
 import json
 from pprint import pprint
+import importlib
 import base64
 import numpy as np
 from io import BytesIO
@@ -17,6 +18,7 @@ import scripts.Berry_Method as bmethod
 import scripts.berry_utility as butility
 import re
 
+berry_util = importlib.import_module("extensions-builtin.TemporalKit.scripts.berry_utility")
 
 
 def sort_into_folders(video_path, fps, per_side, batch_size, _smol_resolution,square_textures,max_frames,output_folder,border):
@@ -113,7 +115,7 @@ def recombine (video_path, fps, per_side, batch_size, fillindenoise, edgedenoise
     combined = bmethod.merge_image_batches(just_frame_groups, border)
 
     save_loc = os.path.join(output_folder, "non_blended.mp4")
-    generated_vid = extensions-builtin.TemporalKit.scripts.berry_utility.pil_images_to_video(combined,save_loc, fps)
+    generated_vid = berry_util.pil_images_to_video(combined,save_loc, fps)
 
 
 
@@ -191,7 +193,7 @@ def crossfade_folder_of_folders(output_folder, fps,return_generated_video_path=F
 
     print (f"outputting {len(output_images)} images")
     output_save_location = os.path.join(output_folder, "crossfade.mp4")
-    generated_vid = extensions-builtin.TemporalKit.scripts.berry_utility.pil_images_to_video(output_images, output_save_location, fps)
+    generated_vid = berry_util.pil_images_to_video(output_images, output_save_location, fps)
      
     if return_generated_video_path == True:
         return generated_vid
